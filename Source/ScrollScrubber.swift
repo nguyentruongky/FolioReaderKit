@@ -213,6 +213,12 @@ class ScrollScrubber: NSObject, UIScrollViewDelegate {
             self.show()
             self.resetScrollDelta()
         }
+        let centerVc = readerContainer?.centerViewController
+        centerVc?.navigationItem.title = centerVc?.getCurrentChapterName()
+        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+            centerVc?.pageIndicatorView?.showNextSectionInstruction()
+        }
+        
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

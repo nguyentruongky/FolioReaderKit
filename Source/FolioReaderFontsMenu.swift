@@ -7,6 +7,7 @@
 //
 
 import UIKit
+//TimesNewRomanPSMT
 
 public enum FolioReaderFont: Int {
     case andada = 0
@@ -28,10 +29,10 @@ public enum FolioReaderFont: Int {
 
     public var cssIdentifier: String {
         switch self {
-        case .andada: return "andada"
-        case .lato: return "lato"
-        case .lora: return "lora"
-        case .raleway: return "raleway"
+        case .andada: return "Times"
+        case .lato: return "Times"
+        case .lora: return "Times"
+        case .raleway: return "Times"
         }
     }
 }
@@ -98,7 +99,8 @@ class FolioReaderFontsMenu: UIViewController, SMSegmentViewDelegate, UIGestureRe
 
         // Menu view
         var visibleHeight: CGFloat = self.readerConfig.canChangeScrollDirection ? 222 : 170
-        visibleHeight = self.readerConfig.canChangeFontStyle ? visibleHeight : visibleHeight - 55
+        //visibleHeight = self.readerConfig.canChangeFontStyle ? visibleHeight : visibleHeight - 55
+        visibleHeight = visibleHeight - 55 - 55
         menuView = UIView(frame: CGRect(x: 0, y: view.frame.height-visibleHeight, width: view.frame.width, height: view.frame.height))
         menuView.backgroundColor = self.folioReader.isNight(self.readerConfig.nightModeMenuBackground, UIColor.white)
         menuView.autoresizingMask = .flexibleWidth
@@ -143,13 +145,13 @@ class FolioReaderFontsMenu: UIViewController, SMSegmentViewDelegate, UIGestureRe
         dayNight.addSegmentWithTitle(self.readerConfig.localizedFontMenuDay, onSelectionImage: sunSelected, offSelectionImage: sunNormal)
         dayNight.addSegmentWithTitle(self.readerConfig.localizedFontMenuNight, onSelectionImage: moonSelected, offSelectionImage: moonNormal)
         dayNight.selectSegmentAtIndex(self.folioReader.nightMode ? 1 : 0)
-        menuView.addSubview(dayNight)
+        //menuView.addSubview(dayNight)
 
 
         // Separator
         let line = UIView(frame: CGRect(x: 0, y: dayNight.frame.height+dayNight.frame.origin.y, width: view.frame.width, height: 1))
         line.backgroundColor = self.readerConfig.nightModeSeparatorColor
-        menuView.addSubview(line)
+        //menuView.addSubview(line)
 
         // Fonts adjust
         let fontNameHeight: CGFloat = self.readerConfig.canChangeFontStyle ? 55: 0
@@ -177,15 +179,18 @@ class FolioReaderFontsMenu: UIViewController, SMSegmentViewDelegate, UIGestureRe
 //        fontName.segments[3].titleFont = UIFont(name: "Raleway-Regular", size: 18)!
 
         fontName.selectSegmentAtIndex(self.folioReader.currentFont.rawValue)
-        menuView.addSubview(fontName)
+        //menuView.addSubview(fontName)
 
         // Separator 2
         let line2 = UIView(frame: CGRect(x: 0, y: fontName.frame.height+fontName.frame.origin.y, width: view.frame.width, height: 1))
         line2.backgroundColor = self.readerConfig.nightModeSeparatorColor
-        menuView.addSubview(line2)
+        //menuView.addSubview(line2)
+    
+    var startY: CGFloat = 0
 
         // Font slider size
-        let slider = HADiscreteSlider(frame: CGRect(x: 60, y: line2.frame.origin.y+2, width: view.frame.width-120, height: 55))
+        let slider = HADiscreteSlider(frame: CGRect(x: 60, y: startY, width: view.frame.width-120, height: 55))
+        slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tickStyle = ComponentStyle.rounded
         slider.tickCount = 5
         slider.tickSize = CGSize(width: 8, height: 8)
@@ -210,23 +215,26 @@ class FolioReaderFontsMenu: UIViewController, SMSegmentViewDelegate, UIGestureRe
         menuView.addSubview(slider)
 
         // Font icons
-        let fontSmallView = UIImageView(frame: CGRect(x: 20, y: line2.frame.origin.y+14, width: 30, height: 30))
+        let fontSmallView = UIImageView(frame: CGRect(x: 20, y: startY+14, width: 30, height: 30))
+        //fontSmallView.translatesAutoresizingMaskIntoConstraints = false
         fontSmallView.image = fontSmallNormal
         fontSmallView.contentMode = UIView.ContentMode.center
         menuView.addSubview(fontSmallView)
 
-        let fontBigView = UIImageView(frame: CGRect(x: view.frame.width-50, y: line2.frame.origin.y+14, width: 30, height: 30))
+        let fontBigView = UIImageView(frame: CGRect(x: view.frame.width-50, y: startY+14, width: 30, height: 30))
+        //fontBigView.translatesAutoresizingMaskIntoConstraints = false
         fontBigView.image = fontBigNormal
         fontBigView.contentMode = UIView.ContentMode.center
         menuView.addSubview(fontBigView)
 
+        
         // Only continues if user can change scroll direction
         guard (self.readerConfig.canChangeScrollDirection == true) else {
             return
         }
 
         // Separator 3
-        let line3 = UIView(frame: CGRect(x: 0, y: line2.frame.origin.y+56, width: view.frame.width, height: 1))
+        let line3 = UIView(frame: CGRect(x: 0, y: startY+56, width: view.frame.width, height: 1))
         line3.backgroundColor = self.readerConfig.nightModeSeparatorColor
         menuView.addSubview(line3)
 

@@ -106,6 +106,13 @@ class FolioReaderPageIndicator: UIView {
         
         reloadView(updateShadow: false)
     }
+    
+    func showNextSectionInstruction() {
+        minutesLabel.text = ""
+        pagesLabel.text = "Scroll up to read next section"
+        pagesLabel.sizeToFit()
+        pagesLabel.center.x = UIScreen.main.bounds.width/2
+    }
 }
 
 extension FolioReaderPageIndicator: CAAnimationDelegate {
